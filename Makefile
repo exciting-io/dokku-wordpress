@@ -49,8 +49,8 @@ endif
 	@test -f $(APP_NAME)/wp-config.php || (cp config/wp-config.php $(APP_NAME)/wp-config.php && cd $(APP_NAME) && git add wp-config.php && git commit -qm "Adding environment-variable based wp-config.php")
 	# adding .env file to configure buildpack
 	@test -f $(APP_NAME)/.buildpacks   || (echo "https://github.com/heroku/heroku-buildpack-php.git#$(BUILDPACK_VERSION)" > $(APP_NAME)/.buildpacks && cd $(APP_NAME) && git add .buildpacks && git commit -qm "Forcing php buildpack usage")
-	# ensuring our composer.json loads with php 5.6 and loads the mysql extension
-	@test -f $(APP_NAME)/composer.json || (cp config/composer.json $(APP_NAME)/composer.json && cp config/composer.lock $(APP_NAME)/composer.lock && cd $(APP_NAME) && git add composer.json composer.lock && git commit -qm "Use PHP 5.6 and the mysql extension")
+	# ensuring our composer.json loads with php 7.3 and loads the mysql extension
+	@test -f $(APP_NAME)/composer.json || (cp config/composer.json $(APP_NAME)/composer.json && cp config/composer.lock $(APP_NAME)/composer.lock && cd $(APP_NAME) && git add composer.json composer.lock && git commit -qm "Use PHP 7.3 and the mysql extension")
 	# setting the correct dokku remote for your app and server combination
 	@cd $(APP_NAME) && (git remote rm dokku 2> /dev/null || true) && git remote add dokku "dokku@$(SERVER_NAME):$(APP_NAME)"
 	# retrieving potential salts and writing them to /tmp/wp-salts
@@ -95,7 +95,7 @@ ifndef UNATTENDED_CREATION
 	# setup your mysql database and link it to your app
 	# if you're using MariaDB, replace mysql with mariadb
 	@echo ""
-	@echo "export MYSQL_IMAGE_VERSION=\"5.6\""
+	@echo "export MYSQL_IMAGE_VERSION=\"8.0\""
 	@echo "dokku mysql:create $(APP_NAME)-database"
 	@echo "dokku mysql:link $(APP_NAME)-database $(APP_NAME)"
 	@echo ""
