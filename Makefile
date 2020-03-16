@@ -86,6 +86,12 @@ ifndef UNATTENDED_CREATION
 	@echo "chown 32767:32767 /var/lib/dokku/data/storage/$(APP_NAME)-languages"
 	@echo "dokku storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-languages:/app/wp-content/languages"
 	@echo ""
+	# setup themes persistent storage
+	@echo ""
+	@echo "mkdir -p /var/lib/dokku/data/storage/$(APP_NAME)-themes"
+	@echo "chown 32767:32767 /var/lib/dokku/data/storage/$(APP_NAME)-themes"
+	@echo "dokku storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-themes:/app/wp-content/themes"
+	@echo ""
 	# setup your mysql database and link it to your app
 	# if you're using MariaDB, replace mysql with mariadb
 	@echo ""
@@ -109,6 +115,7 @@ else
 	$(DOKKU_CMD) storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-plugins:/app/wp-content/plugins
 	$(DOKKU_CMD) storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-uploads:/app/wp-content/uploads
 	$(DOKKU_CMD) storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-languages:/app/wp-content/languages
+	$(DOKKU_CMD) storage:mount $(APP_NAME) /var/lib/dokku/data/storage/$(APP_NAME)-themes:/app/wp-content/themes
 	$(DOKKU_CMD) mysql:create $(APP_NAME)-database
 	$(DOKKU_CMD) mysql:link $(APP_NAME)-database $(APP_NAME)
 	@/tmp/wp-salts
@@ -121,6 +128,8 @@ else
 	@echo "chown 32767:32767 /var/lib/dokku/data/storage/$(APP_NAME)-uploads"
 	@echo "mkdir -p /var/lib/dokku/data/storage/$(APP_NAME)-languages"
 	@echo "chown 32767:32767 /var/lib/dokku/data/storage/$(APP_NAME)-languages"
+	@echo "mkdir -p /var/lib/dokku/data/storage/$(APP_NAME)-themes"
+	@echo "chown 32767:32767 /var/lib/dokku/data/storage/$(APP_NAME)-themes"
 	@echo ""
 	# now, on your local machine, change directory to your new wordpress app, and push it up
 	@echo ""
@@ -152,6 +161,7 @@ ifndef UNATTENDED_CREATION
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-plugins"
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-uploads"
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-languages"
+	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-themes"
 	@echo ""
 	# now, on your local machine, cd into your app's parent directory and remove the app
 	@echo ""
@@ -168,6 +178,7 @@ else
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-plugins"
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-uploads"
 	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-languages"
+	@echo "rm -rf /var/lib/dokku/data/storage/$(APP_NAME)-themes"
 	@echo ""
 	# now, on your local machine, cd into your app's parent directory and remove the app
 	@echo ""
